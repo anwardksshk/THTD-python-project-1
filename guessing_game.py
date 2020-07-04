@@ -8,7 +8,7 @@ def welcome():
 def start_game(top_score):
   random_number = int(random.randint(1,10))
   attempt = 0
-  print("The current high score is {}".format(top_score))
+  print("The current high score: {}".format(high_score))
   while True:
     guess_number = ""
     try:
@@ -19,7 +19,6 @@ def start_game(top_score):
       print("That is an invalid value! Please try again.")
       print("({})".format(err))
     else:
-      print("Guess number is = {}.\n".format(guess_number))
       attempt += 1
       if guess_number == random_number:
         break
@@ -35,14 +34,16 @@ def congratulations(number):
 
 
 def set_highscore(current_score,top_score):
-  if top_score == None or top_score > current_score:
-    top_score = current_score
-    print("You set a record! The new high score to beat is {}!".format(top_score))
+  global high_score
+  if top_score == None or top_score >= current_score:
+    high_score = current_score
+    print("You set a record! The new high score to beat is {}!".format(high_score))
     
 def endgame():
   print("===END GAME===")
 
-def start_again(attempt,high_score):
+def start_again():
+  global high_score, attempt
   play_again = input("\nWould you like to play again? (Y/N) -> ")
   while play_again.lower() != 'n':
     attempt = start_game(high_score)
@@ -51,11 +52,11 @@ def start_again(attempt,high_score):
     play_again = input("\nWould you like to play again? (Y/N) -> ")
 
 
+# <==========================MAIN PROGRAM=============================>
 welcome()
 attempt = start_game(high_score)
 congratulations(attempt)
 set_highscore(attempt,high_score)
-start_again(attempt,high_score)
-
+start_again()
 
 endgame()
